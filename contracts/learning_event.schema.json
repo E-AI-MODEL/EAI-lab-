@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://e-ai-model.github.io/eai-lab/contracts/learning_event.schema.json",
+  "title": "EAI Learning Event",
+  "description": "Append-only observable event. Synthetic and real events must never share an evidence namespace.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "case_id",
+    "timestamp",
+    "actor",
+    "phase",
+    "action_type",
+    "content_or_reference",
+    "target_operation_if_relevant",
+    "synthetic"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "case_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "actor": {
+      "type": "string",
+      "enum": [
+        "learner",
+        "ai",
+        "teacher",
+        "peer",
+        "system_other"
+      ]
+    },
+    "phase": {
+      "type": "string",
+      "enum": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "UNKNOWN"
+      ]
+    },
+    "action_type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "content_or_reference": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "additionalProperties": true
+        }
+      ]
+    },
+    "target_operation_if_relevant": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "task_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "support_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ai_visible": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "teacher_support": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "peer_support": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "active_support_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}
