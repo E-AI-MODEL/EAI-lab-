@@ -1,0 +1,13 @@
+{
+  "case_id": "case_demo_001",
+  "mode": "real",
+  "learning_goal": "The learner can explain a causal relation independently.",
+  "target_core_operations": [
+    "explain_causal_relation"
+  ],
+  "active_phases": [
+    "P4",
+    "P5"
+  ],
+  "subject": "demo"
+}
