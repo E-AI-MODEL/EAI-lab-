@@ -1,0 +1,336 @@
+{
+  "suite": "EAI Core 0.5.4 lossless archive-integrated conformance tests",
+  "core_version": "0.5.4",
+  "purpose": "Release-blocking compatibility tests: preserve 0.5.2 canonical behavior and verify direct 0.3-grounded lossless knowledge restoration.",
+  "cases": [
+    {
+      "id": "T01_UNKNOWN_NONCOERCION",
+      "input": {
+        "dimension": "E",
+        "evidence": "insufficient/no direct observation"
+      },
+      "expect": {
+        "status": "unknown",
+        "must_not": "assign E0 merely because evidence is missing"
+      }
+    },
+    {
+      "id": "T02_TD4_MASTERY_NO_LI",
+      "input": {
+        "TD": "TD4",
+        "target_operation": "same",
+        "claim": "learner_mastery",
+        "LI": "UNKNOWN"
+      },
+      "expect": {
+        "gate": "CLM-02",
+        "decision": "triggered_unresolved",
+        "required": "LI2 with F3/F4 direct learner evidence"
+      }
+    },
+    {
+      "id": "T03_TD4_MASTERY_WITH_LI2",
+      "input": {
+        "TD": "TD4",
+        "target_operation": "same",
+        "claim": "learner_mastery",
+        "LI": "LI2",
+        "evidence_fit": "F3"
+      },
+      "expect": {
+        "gate": "CLM-02",
+        "decision": "triggered_satisfied"
+      }
+    },
+    {
+      "id": "T04_RETENTION_NO_DELAY",
+      "input": {
+        "claim": "retention",
+        "LR": "UNKNOWN",
+        "delayed_independent_evidence": false
+      },
+      "expect": {
+        "gate": "CLM-03",
+        "decision": "triggered_unresolved",
+        "route": "INT-DELAYED-RECALL"
+      }
+    },
+    {
+      "id": "T05_TRANSFER_VALID",
+      "input": {
+        "claim": "transfer",
+        "LT": "LT2",
+        "varied_independent_task_evidence": true,
+        "evidence_fit": "F3"
+      },
+      "expect": {
+        "gate": "CLM-04",
+        "decision": "triggered_satisfied"
+      }
+    },
+    {
+      "id": "T06_P6_INSUFFICIENT_CONTROL",
+      "input": {
+        "active_phases": [
+          "P6"
+        ],
+        "AI_action_can_change_formal_outcome": true,
+        "DBc": "DBc3",
+        "X": "X3"
+      },
+      "expect": {
+        "gate": "CFG-01",
+        "decision": "triggered_unresolved",
+        "required": [
+          "DBc4",
+          "X3"
+        ]
+      }
+    },
+    {
+      "id": "T07_P6_SUFFICIENT_CONTROL",
+      "input": {
+        "active_phases": [
+          "P6"
+        ],
+        "AI_action_can_change_formal_outcome": true,
+        "DBc": "DBc4",
+        "X": "X3"
+      },
+      "expect": {
+        "gate": "CFG-01",
+        "decision": "triggered_satisfied"
+      }
+    },
+    {
+      "id": "T08_HUMAN_IN_LOOP_NO_INFERENCE",
+      "input": {
+        "human_in_loop_present": true,
+        "observed_intervention_authority": "unknown"
+      },
+      "expect": {
+        "gate": "CFG-05",
+        "rule": "do_not_infer_effective_oversight",
+        "DBc": "UNKNOWN_or_observed_lower_state"
+      }
+    },
+    {
+      "id": "T09_ADAPTATION_WEAK_EVIDENCE",
+      "input": {
+        "Ad": "Ad3",
+        "learner_evidence_fit": "F2"
+      },
+      "expect": {
+        "gate": "DID-02",
+        "decision": "flagged",
+        "route": "INT-DIRECT-LEARNER-EVIDENCE"
+      }
+    },
+    {
+      "id": "T10_VM3_WRONG_ORDER",
+      "input": {
+        "VM_candidate": "VM3",
+        "learner_response_precedes_AI_judgment": false
+      },
+      "expect": {
+        "gate": "DID-03",
+        "decision": "capped",
+        "max_state": "VM2"
+      }
+    },
+    {
+      "id": "T11_P5_SUPPORT_NOT_REDUCED",
+      "input": {
+        "active_phases": [
+          "P5"
+        ],
+        "content_support_not_reduced": true
+      },
+      "expect": {
+        "gate": "DID-04",
+        "decision": "flagged",
+        "flag": "invalid_transfer_test"
+      }
+    },
+    {
+      "id": "T12_BIAS_FREE_CLAIM",
+      "input": {
+        "claim": "bias_free",
+        "BH": "BH0",
+        "tested_scope": "explicit"
+      },
+      "expect": {
+        "gate": "CLM-05",
+        "decision": "blocked",
+        "allowed_rewrite": "scoped no-disparity-detected statement only"
+      }
+    },
+    {
+      "id": "T13_MULTIPHASE_UNION",
+      "input": {
+        "active_phases": [
+          "P4",
+          "P6"
+        ],
+        "primary_phase": "P4"
+      },
+      "expect": {
+        "required_dimensions_include_all": [
+          "TD",
+          "C",
+          "E",
+          "X",
+          "DBc",
+          "A",
+          "B"
+        ],
+        "P6_requirements_must_not_be_suppressed": true
+      }
+    },
+    {
+      "id": "T14_C_SERIALIZATION",
+      "input": {
+        "dimension": "C"
+      },
+      "expect": {
+        "encoding": "function_roles[required_function][actor]",
+        "no_single_band": true
+      }
+    },
+    {
+      "id": "T15_S_SERIALIZATION",
+      "input": {
+        "dimension": "S"
+      },
+      "expect": {
+        "axes_required": [
+          "human_participation",
+          "task_interdependence",
+          "shared_regulation",
+          "continuity"
+        ],
+        "no_ordinal_S_band": true
+      }
+    },
+    {
+      "id": "T16_LOSSLESS_LEDGER_COVERAGE",
+      "input": {
+        "lossless_knowledge_layer": "coverage"
+      },
+      "expect": {
+        "source_units_total": 773,
+        "indicator": 482,
+        "scenario": 78,
+        "rule": 52,
+        "claim_boundary": 11
+      }
+    },
+    {
+      "id": "T17_OBSERVATION_LIBRARY",
+      "input": {
+        "lossless_knowledge_layer": "observation_library"
+      },
+      "expect": {
+        "usable_observation_cues": 454,
+        "keyword_match_must_not_classify": true
+      }
+    },
+    {
+      "id": "T18_REPRESENTATIONAL_BIAS_ALERT",
+      "input": {
+        "evidence": "stereotyped or one-sided representational content"
+      },
+      "expect": {
+        "semantic_alert": "LSA-B-BC",
+        "must_surface_plain_language": true,
+        "must_not_invent_current_state": true
+      }
+    },
+    {
+      "id": "T19_RELATIONAL_ROLE_ALERT",
+      "input": {
+        "evidence": "exclusive one-to-one or misleading human reciprocity framing"
+      },
+      "expect": {
+        "semantic_alert": "LSA-VA-VAR",
+        "must_surface_plain_language": true,
+        "warm_tone_alone_not_sufficient": true
+      }
+    },
+    {
+      "id": "T20_SOURCE_ROUNDTRIP",
+      "input": {
+        "embedded_source_texts": true
+      },
+      "expect": {
+        "qa_hash_match": true,
+        "audit_hash_match": true,
+        "ledger_hash_match": true,
+        "snapshot_hash_match": true
+      }
+    },
+    {
+      "id": "T21_INTERPRETATION_GUARDS_FROM_0_3",
+      "input": {
+        "source": "eai_core_v0.3.0.json#myth_catalogue"
+      },
+      "expect": {
+        "guard_count": 6,
+        "ids": [
+          "MYTH_LEARNING_STYLES",
+          "MYTH_BLOOM_LINEAR",
+          "MYTH_FIXED_MINDSET",
+          "MYTH_BRAIN_TRAINING",
+          "MYTH_EXTRINSIC_REWARD",
+          "MYTH_AI_AUTONOMY"
+        ],
+        "runtime_status": "non_runtime_supporting_knowledge",
+        "must_not_claim_byte_identity_with_missing_0_4_guard_file": true
+      }
+    },
+    {
+      "id": "T22_SOURCE_0_3_LEDGER_ID_COVERAGE",
+      "input": {
+        "source": "eai_core_v0.3.0.json",
+        "ledger": "eai_core_v0.4.0_migration_ledger.csv"
+      },
+      "expect": {
+        "dimension": 18,
+        "band": 108,
+        "indicator": 482,
+        "scenario": 78,
+        "rule": 52,
+        "claim_boundary": 11,
+        "missing_ids": 0,
+        "unmapped_ids": 0,
+        "indicator_text_dimension_mismatches": 0
+      }
+    },
+    {
+      "id": "T23_HISTORICAL_SOURCE_ARCHIVE",
+      "input": {
+        "embedded_sources": [
+          "0.2.0",
+          "0.3.0"
+        ]
+      },
+      "expect": {
+        "0.3.0_bytes": 347070,
+        "0.3.0_sha256": "66fb6315bf9472fe6bdd97ab5c33b2edff0555484da0765a085863e1a5abbc11",
+        "0.2.0_bytes": 298738,
+        "0.2.0_sha256": "cac44051b80a5d024741d38083620d6262c9bb576eec40fa78d0a7b9f42c5653"
+      }
+    },
+    {
+      "id": "T24_MISSING_RICH_0_4_LIMIT",
+      "input": {
+        "artifact": "603887-byte lossless EAI Core 0.4.0 build"
+      },
+      "expect": {
+        "status": "not_supplied",
+        "must_not_claim_byte_identical_reconstruction": true,
+        "source_semantics_still_preserved_via_0_3_and_ledger": true
+      }
+    }
+  ]
+}
