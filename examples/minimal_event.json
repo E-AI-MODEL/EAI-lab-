@@ -1,0 +1,20 @@
+{
+  "event_id": "evt_demo_001",
+  "case_id": "case_demo_001",
+  "timestamp": "2026-09-20T15:00:00+02:00",
+  "actor": "learner",
+  "phase": "P4",
+  "action_type": "learner_attempt",
+  "content_or_reference": "Initial learner response.",
+  "target_operation_if_relevant": "explain_causal_relation",
+  "synthetic": false,
+  "support_context": {
+    "ai_visible": false,
+    "teacher_support": false,
+    "peer_support": false,
+    "active_support_ids": []
+  },
+  "provenance": {
+    "source": "direct_learner_input"
+  }
+}
